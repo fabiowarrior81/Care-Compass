@@ -51,7 +51,7 @@ const PATIENT = _stored ? JSON.parse(_stored) : {
 };
 // ── Branding (letto dalle impostazioni della Dashboard) ───────────────────
 const _branding = (()=>{
-  try{ return JSON.parse(localStorage.getItem("gs_branding")||"null")||{}; }
+  try{ return JSON.parse((()=>{try{return localStorage.getItem("gs_branding")}catch(e){return null}})()||"null")||{}; }
   catch(e){ return {}; }
 })();
 
@@ -2296,7 +2296,7 @@ function ReportPanel({allData, selected}){
 
   // ── save to dashboard ─────────────────────────────────────────────────
   function saveAndReturn(){
-    const pts = JSON.parse(localStorage.getItem("gs_patients")||"[]");
+    const pts = JSON.parse((()=>{try{return localStorage.getItem("gs_patients")}catch(e){return null}})()||"[]");
     const scores = {};
     if(mmseOk) scores.mmse = mmseScore;
     if(moOk)   scores.moca = moScore;
@@ -3568,13 +3568,13 @@ const CGA_TRANS = {
     domNotesReport:"Gere o relatório IA com todos os scores.",
   },
 };
-function getCGALang(){ return localStorage.getItem("gs_lang")||"it"; }
+function getCGALang(){ return (()=>{try{return localStorage.getItem("gs_lang")}catch(e){return "it"}})()||"it"; }
 
 
   const [disclaimerDone, setDisclaimerDone] = React.useState(
-    ()=>localStorage.getItem("gs_disclaimer")==="1"
+    ()=>true
   );
-  function acceptDisclaimer(){ localStorage.setItem("gs_disclaimer","1"); setDisclaimerDone(true); }
+  function acceptDisclaimer(){ try{localStorage.setItem("gs_disclaimer","1")}catch(e){}; setDisclaimerDone(true); }
   const [phase,setPhase]=useState("select");
   const [lang,setLang]=useState(()=>getCGALang());
   const T=CGA_TRANS[lang]||CGA_TRANS.it;

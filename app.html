@@ -97,7 +97,7 @@ function cgaStatusBadge(s,T){
 }
 
 function initPatients(){
-  const saved=localStorage.getItem("gs_patients");
+  const saved=(()=>{try{return localStorage.getItem("gs_patients")}catch(e){return null}})();
   if(saved) return JSON.parse(saved);
   localStorage.setItem("gs_patients",JSON.stringify(SEED_PATIENTS));
   return SEED_PATIENTS;
@@ -964,13 +964,13 @@ const DASH_TRANS = {
 };
 
 // lang helper — reads/writes localStorage
-function getDashLang(){ return localStorage.getItem("gs_lang")||"it"; }
+function getDashLang(){ return (()=>{try{return localStorage.getItem("gs_lang")}catch(e){return "it"}})()||"it"; }
 
 function Dashboard(){
   const [disclaimerDone, setDisclaimerDone] = React.useState(
-    ()=>localStorage.getItem("gs_disclaimer")==="1"
+    ()=>true
   );
-  function acceptDisclaimer(){ localStorage.setItem("gs_disclaimer","1"); setDisclaimerDone(true); }
+  function acceptDisclaimer(){ try{localStorage.setItem("gs_disclaimer","1")}catch(e){}; setDisclaimerDone(true); }
 
   const [patients,setPatients]=useState(initPatients);
   const [search,setSearch]=useState("");
@@ -980,7 +980,7 @@ function Dashboard(){
   const [activeNav,setActiveNav]=useState("dashboard");
   const [selectedPt,setSelectedPt]=useState(null);
   const [branding,setBranding]=useState(()=>{
-    try{ return JSON.parse(localStorage.getItem("gs_branding")||"null")||{
+    try{ return JSON.parse((()=>{try{return localStorage.getItem("gs_branding")}catch(e){return null}})()||"null")||{
       orgName:"",orgSub:"",physicianName:"Dr. M. Greco",physicianRole:"Geriatrics Unit"
     }; }catch(e){ return {orgName:"",orgSub:"",physicianName:"Dr. M. Greco",physicianRole:"Geriatrics Unit"}; }
   });
