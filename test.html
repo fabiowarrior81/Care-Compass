@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Test React</title></head>
+<body>
+<div id="root"><p style="font-family:sans-serif;padding:40px">⏳ Caricamento React...</p></div>
+<script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.23.2/babel.min.js"></script>
+<script type="text/babel">
+  function App() {
+    return (
+      <div style={{fontFamily:'sans-serif',padding:'40px',textAlign:'center'}}>
+        <div style={{fontSize:'48px'}}>✅</div>
+        <h2 style={{color:'#2d6a4f'}}>React funziona!</h2>
+        <p style={{color:'#555'}}>CDN caricato correttamente.<br/>Il problema è nel codice dell'app.</p>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
